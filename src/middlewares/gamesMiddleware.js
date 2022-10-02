@@ -28,7 +28,7 @@ async function gamesMiddleware (req, res, next) {
   if(!categoryIdExists.rows[0]) return res.status(400).send({message:"Category not exists!"})
 
   const nameExists = await connection.query('SELECT * FROM games WHERE name = $1', [gameData.name])
-  if(nameExists.rows[0]) return res.status(400).send({message:"Name already exists!"})
+  if(nameExists.rows[0]) return res.status(409).send({message:"This name already exists!"})
 
   next();
 }
