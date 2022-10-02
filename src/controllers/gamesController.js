@@ -6,9 +6,12 @@ async function getGames (req, res) {
 }
 
 async function createGame (req, res) {
-  const { name, pricePerDay, image, stockTotal, categoryId } = req.body
+  const gameData = req.body
+  console.log(gameData)
+  res.send(gameData);
 }
 
 export {
-  getGames
+  getGames,
+  createGame
 }
