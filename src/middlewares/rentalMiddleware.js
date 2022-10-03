@@ -33,6 +33,24 @@ async function createRentalMiddleware (req, res, next) {
   }
 }
 
+async function finishRentalMiddleware (req, res, next) {
+  const rentalId = req.params.id
+
+  try {
+    const rentalExists = await connection.query('SELECT * FROM rentals WHERE id = $1;', [rentalId])
+    if(!rentalExists.rows[0]) return res.sendStatus(404);
+
+    if(rentalExists.rows[0].returnDate) return res.sendStatus(400);
+
+    res.locals.rentalExists = rentalExists.rows[0];
+    next();
+  } catch (error) {
+    console.log(error)
+    return res.sendStatus(500)
+  }
+}
+
 export {
-  createRentalMiddleware
+  createRentalMiddleware,
+  finishRentalMiddleware
 }
