@@ -53,7 +53,6 @@ async function updateCustMiddleware (req, res, next) {
     if(cpfInUse.rows[0]) return res.status(409).send({message:"CPF already exists!"})
   }
 
-  res.locals.customerData = customer.rows[0];
   next();
 }
 
